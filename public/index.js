@@ -104,9 +104,15 @@ function createSprites() {
     };
   });
 
-  itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
+  itemController = new ItemController(
+    ctx,
+    itemImages,
+    scaleRatio,
+    GROUND_SPEED,
+    ITEM_UNLOCK_CONFIG,
+  );
 
-  score = new Score(ctx, scaleRatio);
+  score = new Score(ctx, scaleRatio, STAGE_DATA, ITEM_CONFIG, itemController); // itemController를 Score에 전달
 }
 
 function getScaleRatio() {
@@ -164,6 +170,7 @@ function reset() {
 
   ground.reset();
   cactiController.reset();
+  itemController.reset();
   score.reset();
   gameSpeed = GAME_SPEED_START;
   sendEvent(2, { timestamp: Date.now() });
@@ -215,6 +222,7 @@ function gameLoop(currentTime) {
   if (!gameover && cactiController.collideWith(player)) {
     gameover = true;
     score.setHighScore();
+    sendEvent(3, { timestamp: Date.now(), score: Math.floor(score.score) });
     setupGameReset();
   }
   const collideWithItem = itemController.collideWith(player);

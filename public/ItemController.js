@@ -7,12 +7,12 @@ class ItemController {
   nextInterval = null;
   items = [];
 
-  constructor(ctx, itemImages, scaleRatio, speed) {
+  constructor(ctx, itemImages, scaleRatio, speed, itemUnlockTable) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.itemImages = itemImages;
     this.scaleRatio = scaleRatio;
-    this.speed = speed;    
+    this.speed = speed;
     this.currentStage = 1000;
     this.itemUnlockTable = itemUnlockTable;
 
@@ -83,6 +83,10 @@ class ItemController {
 
   reset() {
     this.items = [];
+  }
+
+  setCurrentStage(stageId) {
+    this.currentStage = stageId;
   }
 }
 
